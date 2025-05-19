@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All Doctors</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e4f6fe, #dbeaff); /* Background gradient */
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #4faaf5, #044373); /* Blue gradient */
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        /* Back Button Styling */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .back-button a {
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #14279B; /* Navy blue */
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button a:hover {
+            background-color: #1d4ed8; 
+            transform: scale(1.05);
+        }
+
+        /* Table Container */
+        .table-container {
+            overflow-x: auto;
+            padding: 20px;
+            margin: 20px auto;
+            width: 90%;
+            background: white;
+            border-radius: 20px;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            background: white;
+            border: 2px solid #162aa5; /* Navy blue border */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #1c57b0; /* Navy blue */
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        td {
+            background: #fdf2dc; /* Soft beige */
+            color: #333;
+            border: 1px solid #dbeaff; /* Light blue border */
+            font-size: 15px;
+            transition: background 0.3s ease;
+        }
+
+        tr:nth-child(odd) td {
+            background: white; /* Alternating white rows */
+        }
+
+        tr:hover td {
+            background: #e4f1fe; /* Highlight row on hover */
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            background: #f44336; /* Red */
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease-in-out;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Back Button -->
+<div class="back-button">
+    <a href="/adminDoctorPage">Back</a>
+</div>
+
+<!-- Page Title -->
+<header>
+    List of All Doctors
+</header>
+
+<!-- Table Container -->
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Doctor ID</th>
+            <th>Doctor Name</th>
+            <th>Specialization</th>
+            <th>Consultation Fees</th>
+            <th>Date of Joining</th>
+            <th>Years of Experience</th>
+            <th>Contact Number</th>
+            <th>Email ID</th>
+            <th>Gender</th>
+            <th>Location</th>
+            <th>Qualification</th>
+            <th>Surgeon</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="doctor : ${doctors}">
+            <td th:text="${doctor.doctorId}"></td>
+            <td th:text="${doctor.doctorName}"></td>
+            <td th:text="${doctor.specialization}"></td>
+            <td th:text="${doctor.consultationFees}"></td>
+            <td th:text="${doctor.dateOfJoining}"></td>
+            <td th:text="${doctor.yearsOfExperience}"></td>
+            <td th:text="${doctor.contactNumber}"></td>
+            <td th:text="${doctor.emailId}"></td>
+            <td th:text="${doctor.gender}"></td>
+            <td th:text="${doctor.location}"></td>
+            <td th:text="${doctor.qualification}"></td>
+            <td th:text="${doctor.surgeon != null ? (doctor.surgeon ? 'Yes' : 'No') : 'No'}"></td>
+            <td th:text="${doctor.status != null ? (doctor.status ? 'Active' : 'Inactive') : 'Inactive'}"></td>
+			<td>
+			    <a th:href="@{/disableDoctor/{doctorId}(doctorId=${doctor.doctorId})}" 
+			       onclick="alert('Doctor has been successfully disabled!')">
+			        <button class="disable-button">Disable</button>
+			    </a>
+			</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
